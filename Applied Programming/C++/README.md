@@ -17,9 +17,9 @@ I created this software to have a simple way of keeping track of accounts and to
 
 {Describe the tools that you used to develop the software}
 Tools Used
-Visual Studios for IDE
-C++ for language
-MinGW for compiler
+- Visual Studios for IDE
+- C++ for language
+- MinGW for compiler
 
 
 
