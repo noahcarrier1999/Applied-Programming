@@ -5,6 +5,7 @@
 
 using namespace std;
 
+// Base class for all types of accounts
 class Account
 {
 protected:
@@ -12,21 +13,25 @@ protected:
     double balance;
 
 public:
-
+    // Constructor to initialize owner and balance
     Account(string owner, double balance)
     {
         this->owner = owner;
         this->balance = balance;
     }
 
+    // Getter for owner
     string getOwner(){
         return owner;
     }
 
+    // Getter for balance
     double getBalance(){
         return balance;
     }
 
+    // Method to delete an account from the vector
+    // Not implemented
     static void deleteAccount(vector<Account*>& accounts){
 
         int index;
@@ -57,7 +62,7 @@ public:
     }
 
     
-
+    // Static method to display all accounts
     static void displayAccounts(const vector<Account*> &accounts)
     {
         int index = 0;
@@ -70,6 +75,7 @@ public:
         }
     }
 
+    // Static method to deposit to a specific account
     static void depositToAccount(vector<Account*> &accounts)
     {
         int index;
@@ -90,6 +96,7 @@ public:
         }
     }
 
+    // Static method to withdraw from a specific account
     static void withdrawFromAccount(vector<Account*> &accounts)
     {
         int index;
@@ -119,30 +126,35 @@ public:
 
 
 
-
+// Derived class for Savings Account inheriting from Account
 class SavingsAccount : public Account
 {
 private:
     double interestRate;
 
 public:
+    // Constructor for Savings Account
     SavingsAccount(string owner, double balance, double interestRate) : Account(owner, balance), interestRate(interestRate) {}
 
+    // Getter for interest rate
     double getInterestRate() const {  // Getter for interestRate
         return interestRate;
     }
 
+    // Apply interest to the balance
     void applyInterest()
     {
         balance += balance * (interestRate / 100);
     }
 
+     // Override addFunds to add interest when depositing
     virtual void addFunds(double amount) override
     {
         Account::addFunds(amount); // Optionally add interest when depositing
         applyInterest();
     }
 
+    // Override display to show interest rate
     virtual void display() const override
     {
         Account::display();
@@ -152,6 +164,7 @@ public:
    
 };
 
+// Function to write accounts to a file
 void writeToFile(vector<Account*>& accounts)
     {
         ofstream file("accounts.txt");
@@ -170,6 +183,7 @@ void writeToFile(vector<Account*>& accounts)
         file.close();
     }
 
+// Function to read accounts from a file
 void readFromFile(vector<Account*>& accounts)
     {
         string type,owner;
@@ -186,6 +200,7 @@ void readFromFile(vector<Account*>& accounts)
     }
     }
 
+// Function to create a regular account
  void createAccount(vector<Account*>& accounts)
     {
         string owner;
@@ -201,6 +216,7 @@ void readFromFile(vector<Account*>& accounts)
         accounts.push_back(tempAccount);
     }
 
+// Function to create a savings account
  void createSavingsAccount(vector<Account*> &accounts)
     {
         string owner;
@@ -216,6 +232,7 @@ void readFromFile(vector<Account*>& accounts)
         accounts.push_back(new SavingsAccount(owner, balance, interestRate));
     }
 
+// Main function to manage accounts
 int main()
 {
 
@@ -283,10 +300,6 @@ int main()
         }
     }
 
-    // for (auto acc : accounts)
-    // {
-    //     delete acc;
-    // }
 
     return 0;
 }
